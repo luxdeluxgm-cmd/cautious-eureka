@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:id="@+id/ll_widget_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#673AB7"
+        android:padding="8dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_widget_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚔️ Daily Quests"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/widget_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#DDDDDD"
+        android:dividerHeight="1dp"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/appwidget_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="No tasks for today!"
+        android:visibility="gone"
+        android:textColor="#333333"/>
+</LinearLayout>

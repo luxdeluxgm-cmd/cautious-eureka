@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/level_up_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CC000000"
+    android:clickable="true"
+    android:focusable="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp">
+
+            <ImageView
+                android:id="@+id/iv_glow"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@android:drawable/star_big_on"
+                android:tint="#33FFD700"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:alpha="0"/>
+
+            <ImageView
+                android:id="@+id/iv_star"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:src="@android:drawable/btn_star_big_on"
+                android:tint="#FFD700"
+                android:scaleX="0"
+                android:scaleY="0"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_level_up_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LEVEL UP!"
+            android:textColor="#FFD700"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:alpha="0"
+            android:translationY="50dp"/>
+
+        <TextView
+            android:id="@+id/tv_level_up_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Osiągnięto poziom 5"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_marginTop="8dp"
+            android:alpha="0"
+            android:translationY="50dp"/>
+
+        <Button
+            android:id="@+id/btn_claim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CLAIM"
+            android:backgroundTint="#FFD700"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:paddingHorizontal="32dp"
+            android:layout_marginTop="32dp"
+            android:alpha="0"
+            android:scaleX="0"
+            android:scaleY="0"/>
+
+    </LinearLayout>
+</FrameLayout>

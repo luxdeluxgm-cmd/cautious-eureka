@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toast_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal|bottom"
+    android:background="@drawable/bg_toast_custom"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="8dp"
+    android:layout_marginBottom="120dp"
+    android:clipChildren="true">
+
+    <ImageView
+        android:id="@+id/toast_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@android:drawable/btn_star_big_on"
+        app:tint="#FFFFFF"
+        android:scaleX="0"
+        android:scaleY="0"/>
+
+    <LinearLayout
+        android:id="@+id/text_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <Space
+            android:layout_width="12dp"
+            android:layout_height="1dp"/>
+
+        <TextView
+            android:id="@+id/tv_toast_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+10 XP"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:scrollHorizontally="true"
+            android:alpha="0"/>
+    </LinearLayout>
+
+</LinearLayout>

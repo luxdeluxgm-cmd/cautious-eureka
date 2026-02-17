@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Grind Log</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="nav_journal">Journal</string>
+    <string name="nav_quests">Quests</string>
+    <string name="nav_profile">Profile</string>
+
+    <string name="journal_title">Journal</string>
+    <string name="journal_empty_title">Your journal is empty...</string>
+    <string name="journal_empty_subtitle">Add an entry or complete a quest!</string>
+    <string name="dialog_note_header">New Entry</string>
+    <string name="dialog_note_title_hint">Title (e.g., Workout done!)</string>
+    <string name="dialog_note_content_hint">Describe your day...</string>
+    <string name="dialog_note_add_photo">Add photo</string>
+    <string name="entry_detail_delete_description">Delete entry</string>
+    <string name="entry_detail_btn_close">Close</string>
+
+    <string name="quests_header">Quest Board</string>
+    <string name="dialog_quest_header">New Quest</string>
+    <string name="dialog_quest_hint_title">What needs to be done?</string>
+    <string name="dialog_quest_label_difficulty">Difficulty level:</string>
+    <string name="dialog_quest_easy">Easy\n(10 XP)</string>
+    <string name="dialog_quest_medium">Medium\n(30 XP)</string>
+    <string name="dialog_quest_hard">Hard\n(50 XP)</string>
+    <string name="item_quest_delete_description">Delete quest</string>
+    <string name="item_quest_default_text">Example quest</string>
+
+    <string name="dialog_quest_label_tag">Category:</string>
+    <string name="tag_work">Work</string>
+    <string name="tag_school">School</string>
+    <string name="tag_self">Self</string>
+    <string name="tag_custom">Custom</string>
+    <string name="tag_custom_hint">Custom name...</string>
+    <string name="tag_color_label">Pick a color:</string>
+    <string name="tag_select_custom">Custom +</string>
+
+    <string name="level_up_header">LEVEL UP!</string>
+    <string name="overlay_level_up_desc">Level %d reached</string>
+    <string name="overlay_level_up_btn_claim">CLAIM</string>
+    <string name="toast_xp_gain">+%d XP</string>
+
+
+
+
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="#202020">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/tv_unified_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Preview"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <ImageButton
+                android:id="@+id/btn_unified_close"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="end"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:background="?selectableItemBackgroundBorderless"
+                app:tint="#FFFFFF"/>
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/iv_unified_preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:maxHeight="500dp"
+            android:scaleType="fitCenter"
+            android:background="#000000"
+            android:minHeight="200dp"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

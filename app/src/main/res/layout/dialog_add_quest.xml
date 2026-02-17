@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#FFFFFF">
+
+    <EditText
+        android:id="@+id/et_quest_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Task title"
+        android:layout_marginBottom="12dp"
+        android:inputType="textCapSentences"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Difficulty:"
+        android:textColor="#757575"
+        android:layout_marginBottom="8dp"/>
+
+    <RadioGroup
+        android:id="@+id/rg_difficulty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_easy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Easy"
+            android:checked="true"
+            android:gravity="center"
+            android:layout_marginEnd="16dp"/>
+
+        <RadioButton
+            android:id="@+id/rb_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medium"
+            android:gravity="center"
+            android:layout_marginEnd="16dp"/>
+
+        <RadioButton
+            android:id="@+id/rb_hard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hard"
+            android:gravity="center"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category:"
+        android:textColor="#757575"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"/>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <RadioGroup
+            android:id="@+id/rg_tags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_tag_none"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="None"
+                android:checked="true"
+                android:layout_marginEnd="8dp"/>
+
+            <RadioButton
+                android:id="@+id/rb_tag_work"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Work"
+                android:buttonTint="#42A5F5"
+                android:layout_marginEnd="8dp"/>
+
+            <RadioButton
+                android:id="@+id/rb_tag_school"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="School"
+                android:buttonTint="#F5A623"
+                android:layout_marginEnd="8dp"/>
+
+            <RadioButton
+                android:id="@+id/rb_tag_self"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Self"
+                android:buttonTint="#4CAF50"
+                android:layout_marginEnd="8dp"/>
+
+            <RadioButton
+                android:id="@+id/rb_tag_custom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Custom..."/>
+        </RadioGroup>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_custom_tag_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_marginTop="12dp">
+
+        <EditText
+            android:id="@+id/et_custom_tag_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nazwa taga..."/>
+
+        <com.example.myapplication.ColorPickerSquare
+            android:id="@+id/tag_square_picker"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="8dp"/>
+
+        <SeekBar
+            android:id="@+id/tag_seek_hue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="360"
+            android:layout_marginTop="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <View
+                android:id="@+id/tag_view_preview"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="#42A5F5"
+                android:layout_marginEnd="8dp"/>
+
+            <EditText
+                android:id="@+id/tag_et_hex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="#HEX"
+                android:textSize="12sp"
+                android:enabled="false"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_save_quest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD TASK"
+        android:backgroundTint="#FFD700"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"/>
+</LinearLayout>
