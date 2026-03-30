@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/transparent"
     android:fillViewport="true">
 
     <LinearLayout
@@ -10,14 +11,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="24dp"
-        android:background="@android:color/white">
+        android:background="@drawable/bg_dialog_rounded">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="12dp">
 
             <TextView
                 android:id="@+id/tv_detail_date"
@@ -25,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="12.12.2025 14:00"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@color/text_secondary"
                 android:textSize="14sp"/>
 
             <ImageButton
@@ -34,7 +35,7 @@
                 android:layout_height="32dp"
                 android:src="@android:drawable/ic_menu_delete"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                app:tint="@android:color/darker_gray"
+                app:tint="@color/error_red"
                 android:contentDescription="Usuń wpis"/>
         </LinearLayout>
 
@@ -43,18 +44,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tytuł Wpisu"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textColor="@color/text_primary"
             android:layout_marginBottom="16dp"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_detail_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
-            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/bg_dark_surface"
+            android:layout_marginBottom="20dp"
             android:visibility="gone">
 
             <ImageView
@@ -72,18 +74,19 @@
             android:layout_height="wrap_content"
             android:text="Pełna treść..."
             android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:lineSpacingExtra="4dp"
+            android:textColor="@color/text_secondary"
+            android:lineSpacingExtra="6dp"
             android:layout_marginBottom="32dp"/>
 
         <Button
             android:id="@+id/btn_close_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Close"
-            android:textColor="@android:color/black"
-            android:backgroundTint="#F0F0F0"
+            android:text="Zamknij"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            app:backgroundTint="@color/error_red"
+            app:cornerRadius="12dp"
             android:elevation="0dp"/>
-
     </LinearLayout>
 </ScrollView>

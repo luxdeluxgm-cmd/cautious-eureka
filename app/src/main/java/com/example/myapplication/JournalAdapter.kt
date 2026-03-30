@@ -21,9 +21,9 @@ class JournalAdapter(
         val cvImage: CardView = view.findViewById(R.id.cv_journal_image)
         val ivImage: ImageView = view.findViewById(R.id.iv_journal_image)
 
-        // NOWE POLA
         val tvTime: TextView = view.findViewById(R.id.tv_journal_time)
         val tvDateOnly: TextView = view.findViewById(R.id.tv_journal_date_only)
+        val ivJournalIcon: ImageView = view.findViewById(R.id.iv_journal_icon)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JournalViewHolder {
@@ -34,14 +34,14 @@ class JournalAdapter(
     override fun onBindViewHolder(holder: JournalViewHolder, position: Int) {
         val entry = entries[position]
 
-        // 1. Kolor godziny i ikonki z motywu użytkownika
+        // --- NAPRAWA KOLORU (Czysty, identyczny odcień) ---
         holder.tvTime.setTextColor(GameManager.appThemeColor)
-        holder.itemView.findViewById<ImageView>(R.id.iv_journal_icon).imageTintList = android.content.res.ColorStateList.valueOf(GameManager.appThemeColor)
+        holder.ivJournalIcon.setColorFilter(GameManager.appThemeColor, android.graphics.PorterDuff.Mode.SRC_IN)
+        // --------------------------------------------------
 
         holder.tvTitle.text = entry.title
         holder.tvContent.text = entry.content
 
-        // 2. Przypisanie daty i godziny do osobnych pól
         if (entry.time.isNotEmpty()) {
             holder.tvTime.text = entry.time
             holder.tvTime.visibility = View.VISIBLE
@@ -53,13 +53,11 @@ class JournalAdapter(
 
         holder.itemView.setOnClickListener { onClick(entry) }
 
-        // 3. Ładowanie zdjęć nowoczesną biblioteką COIL (Zamiast 100 linijek starego kodu!)
         if (!entry.imageUri.isNullOrEmpty()) {
             val file = File(entry.imageUri)
             if (file.exists()) {
                 holder.cvImage.visibility = View.VISIBLE
 
-                // Magia Coila - to jedna linijka załatwia obracanie, cache i wyświetlanie:
                 holder.ivImage.load(file) {
                     crossfade(true)
                 }
