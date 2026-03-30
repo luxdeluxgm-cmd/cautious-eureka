@@ -290,7 +290,6 @@ class SettingsActivity : AppCompatActivity() {
             executor.execute {
                 val file = File(filesDir, "my_rpg_avatar.jpg")
                 contentResolver.openInputStream(tempAvatarUri!!)?.use { input -> FileOutputStream(file).use { it -> input.copyTo(it) } }
-                GameManager.clearCacheFor(GameManager.avatarUri)
                 GameManager.avatarUri = file.absolutePath
                 mainHandler.post {
                     GameManager.saveGame(this)

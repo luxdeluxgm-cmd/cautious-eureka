@@ -210,7 +210,6 @@ class JournalFragment : Fragment() {
                     if (entry.imageUri != null) {
                         val file = File(entry.imageUri)
                         if (file.exists()) file.delete()
-                        GameManager.clearCacheFor(entry.imageUri)
                     }
                     GameManager.journalEntries.remove(entry)
                     GameManager.saveGame(requireContext())
@@ -240,11 +239,6 @@ class JournalFragment : Fragment() {
     }
 
     private fun loadImageAsync(imageView: ImageView, path: String, reqSize: Int) {
-        val cachedBitmap = GameManager.memoryCache.get(path)
-        if (cachedBitmap != null) {
-            imageView.setImageBitmap(cachedBitmap)
-            return
-        }
         executor.execute {
             try {
                 val options = BitmapFactory.Options()
@@ -255,7 +249,6 @@ class JournalFragment : Fragment() {
                 var bitmap = BitmapFactory.decodeFile(path, options)
                 if (bitmap != null) {
                     bitmap = rotateBitmapIfNeeded(bitmap, path)
-                    GameManager.memoryCache.put(path, bitmap)
                     mainHandler.post { imageView.setImageBitmap(bitmap) }
                 }
             } catch (e: Exception) { e.printStackTrace() }

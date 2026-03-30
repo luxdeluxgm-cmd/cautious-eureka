@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
-import android.util.LruCache
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.ByteArrayOutputStream
@@ -43,11 +42,6 @@ object GameManager {
     private const val PREFS_NAME = "RpgLifeSave"
     private val gson = Gson()
 
-    val memoryCache: LruCache<String, Bitmap> = object : LruCache<String, Bitmap>(4 * 1024 * 1024) {
-        override fun sizeOf(key: String, value: Bitmap): Int { return value.byteCount }
-    }
-    fun clearCacheFor(path: String?) { if (path != null) memoryCache.remove(path) }
-
     var nickname: String = "Bezimienny"; var description: String = "..."
     var avatarUri: String = ""; var isFirstRun: Boolean = true
 
@@ -64,7 +58,7 @@ object GameManager {
     var weeklyQuests = mutableListOf<Quest>()
     var yearlyQuests = mutableListOf<Quest>()
     var journalEntries = mutableListOf<JournalEntry>()
-    var appLanguage: String = "PL" // Zmienna została, ale nie jest używana w UI
+    var appLanguage: String = "PL"
     var appThemeColor: Int = -10011977
 
     fun getNextLevelThreshold(level: Int): Int {
@@ -81,9 +75,7 @@ object GameManager {
         val date = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date())
         val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
 
-        // === POPRAWKA: Język Angielski w Dzienniku ===
         journalEntries.add(0, JournalEntry("Completed: $questTitle", "Reward: +$amount XP", 1, date, time))
-        // =============================================
 
         AnimationHelper.showXpToast(context, amount)
         checkForLevelUp(context)
@@ -97,9 +89,7 @@ object GameManager {
 
         if (totalTasksDone > 0) totalTasksDone--
 
-        // === POPRAWKA: Szukanie po angielskiej nazwie ===
         val entry = journalEntries.firstOrNull { it.title == "Completed: $questTitle" && it.type == 1 }
-        // ================================================
 
         if (entry != null) journalEntries.remove(entry)
 
@@ -138,7 +128,6 @@ object GameManager {
         }
     }
 
-    // === PANCERNA FUNKCJA LOGIKI DNIA I SERII ===
     fun checkAndResetQuests(context: Context): Boolean {
         val now = Calendar.getInstance()
         val currentDay = now.get(Calendar.DAY_OF_YEAR)
@@ -214,9 +203,6 @@ object GameManager {
         prefs.putString("KEY_NICKNAME", nickname).putString("KEY_DESC", description).putString("KEY_AVATAR", avatarUri)
         prefs.putBoolean("KEY_IS_FIRST_RUN", isFirstRun).putInt("KEY_COLOR_INT", appThemeColor).putString("KEY_LANG", appLanguage)
         prefs.putInt("KEY_REM_HOUR", reminderHour).putInt("KEY_REM_MIN", reminderMinute)
-
-        // --- POPRAWKA BŁĘDU KRYTYCZNEGO (Zacinanie UI) ---
-        // apply() zapisuje asynchronicznie (w tle), zamiast synchronicznego commit()
         prefs.apply()
     }
 
