@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.Executors
 
 // === KLASY DANYCH ===
 
@@ -41,6 +42,9 @@ data class FullGameState(
 object GameManager {
     private const val PREFS_NAME = "RpgLifeSave"
     private val gson = Gson()
+
+    // === NOWOŚĆ: Robotnik pracujący w tle, by gra się nie zacinała ===
+    private val dbExecutor = Executors.newSingleThreadExecutor()
 
     var nickname: String = "Bezimienny"; var description: String = "..."
     var avatarUri: String = ""; var isFirstRun: Boolean = true
@@ -190,7 +194,8 @@ object GameManager {
         prefs.putString("KEY_DAILY", gson.toJson(dailyQuests))
         prefs.putString("KEY_WEEKLY", gson.toJson(weeklyQuests))
         prefs.putString("KEY_YEARLY", gson.toJson(yearlyQuests))
-        prefs.putString("KEY_JOURNAL", gson.toJson(journalEntries))
+
+        // Zwróć uwagę - NIE MA JUŻ TUTAJ ZAPISU "KEY_JOURNAL" DO PREFSÓW!
 
         prefs.putInt("KEY_LEVEL", currentLevel)
         prefs.putInt("KEY_XP", currentXp)
@@ -204,6 +209,20 @@ object GameManager {
         prefs.putBoolean("KEY_IS_FIRST_RUN", isFirstRun).putInt("KEY_COLOR_INT", appThemeColor).putString("KEY_LANG", appLanguage)
         prefs.putInt("KEY_REM_HOUR", reminderHour).putInt("KEY_REM_MIN", reminderMinute)
         prefs.apply()
+
+        // === NOWOŚĆ: Dziennik zapisuje się bezpiecznie w TLE (w bazie Room) ===
+        val currentJournal = journalEntries.toList() // Robimy bezpieczną kopię
+        dbExecutor.execute {
+            try {
+                val dao = AppDatabase.getDatabase(context).journalDao()
+                dao.deleteAll() // Szybkie czyszczenie
+
+                // Zapisujemy odwrócone, żeby w bazie najstarsze miało ID 1, a najnowsze najwyższe ID
+                currentJournal.reversed().forEach {
+                    dao.insert(RoomJournalEntry(title = it.title, content = it.content, type = it.type, date = it.date, time = it.time, imageUri = it.imageUri, imageBase64 = it.imageBase64))
+                }
+            } catch (e: Exception) { e.printStackTrace() }
+        }
     }
 
     fun loadGame(context: Context) {
@@ -231,16 +250,34 @@ object GameManager {
         else isFirstRun = prefs.getBoolean("KEY_IS_FIRST_RUN", true)
 
         val qType = object : TypeToken<MutableList<Quest>>() {}.type
-        val jType = object : TypeToken<MutableList<JournalEntry>>() {}.type
         prefs.getString("KEY_DAILY", null)?.let { dailyQuests = gson.fromJson(it, qType) }
         prefs.getString("KEY_WEEKLY", null)?.let { weeklyQuests = gson.fromJson(it, qType) }
         prefs.getString("KEY_YEARLY", null)?.let { yearlyQuests = gson.fromJson(it, qType) }
-        prefs.getString("KEY_JOURNAL", null)?.let { journalEntries = gson.fromJson(it, jType) }
+
+        // === MAGICZNA MIGRACJA: Ze starych Prefsów do nowej Bazy Danych ===
+        val dao = AppDatabase.getDatabase(context).journalDao()
+        if (prefs.contains("KEY_JOURNAL")) {
+            // Użytkownik ma stare dane - przenosimy!
+            val jType = object : TypeToken<MutableList<JournalEntry>>() {}.type
+            prefs.getString("KEY_JOURNAL", null)?.let {
+                journalEntries = gson.fromJson(it, jType) ?: mutableListOf()
+            }
+            saveGame(context) // Zapisze wszystko do nowej Bazy
+            prefs.edit().remove("KEY_JOURNAL").apply() // Niszczymy starą bombę na zawsze
+        } else {
+            // Użytkownik gra normalnie - wczytujemy z superszybkiej bazy Room
+            val roomEntries = dao.getAllEntries()
+            journalEntries = roomEntries.map {
+                JournalEntry(it.title, it.content, it.type, it.date, it.time, it.imageUri, it.imageBase64)
+            }.toMutableList()
+        }
+        // =================================================================
 
         recalculateTotalXp()
         checkAndResetQuests(context)
     }
 
+    // Pozostałe, stare funkcje zostają bez zmian
     fun getExportJson(): String {
         val packedJournal = journalEntries.map { if (it.imageUri != null) it.copy(imageBase64 = compressAndEncodeImage(it.imageUri, 500)) else it }
         val avatarBase64 = if (avatarUri.isNotEmpty()) compressAndEncodeImage(avatarUri, 300) else null
@@ -273,6 +310,7 @@ object GameManager {
             journalEntries.clear()
             state.journalEntries.forEach { e -> var u = e.imageUri; if (e.imageBase64 != null) u = decodeAndSaveImage(e.imageBase64, "j_${System.nanoTime()}.jpg", context); journalEntries.add(e.copy(imageUri = u, imageBase64 = null)) }
             if (state.avatarBase64Data != null) avatarUri = decodeAndSaveImage(state.avatarBase64Data, "imp_av.jpg", context) ?: ""
+
             saveGame(context); true
         } catch (e: Exception) { false }
     }

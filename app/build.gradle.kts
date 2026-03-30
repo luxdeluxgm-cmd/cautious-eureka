@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt") // <-- DODANE DO BAZY ROOM
 }
 
 android {
@@ -36,7 +37,6 @@ android {
 }
 
 dependencies {
-
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("androidx.exifinterface:exifinterface:1.3.6")
     implementation(libs.androidx.core.ktx)
@@ -49,4 +49,9 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("io.coil-kt:coil:2.6.0")
 
+    // === BAZA DANYCH ROOM ===
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
 }
