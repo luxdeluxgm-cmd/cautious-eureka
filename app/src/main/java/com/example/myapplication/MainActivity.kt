@@ -139,9 +139,25 @@ class MainActivity : AppCompatActivity() {
                 calendar.add(Calendar.DAY_OF_MONTH, 1)
             }
 
-            alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent
-            )
+            // --- POPRAWKA BŁĘDU KRYTYCZNEGO (Android 14+ Crash) ---
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (alarmManager.canScheduleExactAlarms()) {
+                    alarmManager.setRepeating(
+                        AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent
+                    )
+                } else {
+                    // Jeśli brak uprawnień na precyzyjny alarm, bezpiecznie ustawiamy go niedokładnie
+                    alarmManager.setInexactRepeating(
+                        AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent
+                    )
+                }
+            } else {
+                alarmManager.setRepeating(
+                    AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent
+                )
+            }
+            // --------------------------------------------------------
+
         } catch (e: Exception) { e.printStackTrace() }
     }
 

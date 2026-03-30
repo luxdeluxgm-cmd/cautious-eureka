@@ -214,7 +214,10 @@ object GameManager {
         prefs.putString("KEY_NICKNAME", nickname).putString("KEY_DESC", description).putString("KEY_AVATAR", avatarUri)
         prefs.putBoolean("KEY_IS_FIRST_RUN", isFirstRun).putInt("KEY_COLOR_INT", appThemeColor).putString("KEY_LANG", appLanguage)
         prefs.putInt("KEY_REM_HOUR", reminderHour).putInt("KEY_REM_MIN", reminderMinute)
-        prefs.commit()
+
+        // --- POPRAWKA BŁĘDU KRYTYCZNEGO (Zacinanie UI) ---
+        // apply() zapisuje asynchronicznie (w tle), zamiast synchronicznego commit()
+        prefs.apply()
     }
 
     fun loadGame(context: Context) {
