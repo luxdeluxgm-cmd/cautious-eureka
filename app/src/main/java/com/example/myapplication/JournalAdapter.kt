@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import java.io.File
@@ -37,11 +35,12 @@ class JournalAdapter(
     override fun onBindViewHolder(holder: JournalViewHolder, position: Int) {
         val entry = entries[position]
 
-        // --- OFICJALNA, CZYSTA METODA KOLOROWANIA (zamiast starego setColorFilter) ---
         holder.tvTime.setTextColor(GameManager.appThemeColor)
-        ImageViewCompat.setImageTintList(holder.ivJournalIcon, ColorStateList.valueOf(GameManager.appThemeColor))
-        ImageViewCompat.setImageTintMode(holder.ivJournalIcon, PorterDuff.Mode.SRC_IN)
-        // -----------------------------------------------------------------------------
+
+        // === OTO MAGIA: Wrzucamy nową ikonę i nakładamy czysty kolor ===
+        holder.ivJournalIcon.setImageResource(R.drawable.ic_custom_edit)
+        holder.ivJournalIcon.setColorFilter(GameManager.appThemeColor, PorterDuff.Mode.SRC_IN)
+        // ===============================================================
 
         holder.tvTitle.text = entry.title
         holder.tvContent.text = entry.content
@@ -61,10 +60,7 @@ class JournalAdapter(
             val file = File(entry.imageUri)
             if (file.exists()) {
                 holder.cvImage.visibility = View.VISIBLE
-
-                holder.ivImage.load(file) {
-                    crossfade(true)
-                }
+                holder.ivImage.load(file) { crossfade(true) }
             } else {
                 holder.cvImage.visibility = View.GONE
             }

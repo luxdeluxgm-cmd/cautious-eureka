@@ -33,7 +33,7 @@
                 android:id="@+id/btn_delete_entry"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@android:drawable/ic_menu_delete"
+                android:src="@drawable/ic_custom_delete"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 app:tint="@color/error_red"
                 android:contentDescription="Usuń wpis"/>
