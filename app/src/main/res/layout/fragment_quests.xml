@@ -48,7 +48,7 @@
                 android:id="@+id/btn_add_daily"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@android:drawable/ic_input_add"
+                android:src="@drawable/ic_custom_add"
                 android:background="?selectableItemBackgroundBorderless"
                 android:layout_marginStart="8dp"/>
         </LinearLayout>
@@ -97,7 +97,7 @@
                 android:id="@+id/btn_add_weekly"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@android:drawable/ic_input_add"
+                android:src="@drawable/ic_custom_add"
                 android:background="?selectableItemBackgroundBorderless"
                 android:layout_marginStart="8dp"/>
         </LinearLayout>
@@ -146,7 +146,7 @@
                 android:id="@+id/btn_add_yearly"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@android:drawable/ic_input_add"
+                android:src="@drawable/ic_custom_add"
                 android:background="?selectableItemBackgroundBorderless"
                 android:layout_marginStart="8dp"/>
         </LinearLayout>

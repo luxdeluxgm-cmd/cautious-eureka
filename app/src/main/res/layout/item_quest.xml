@@ -45,7 +45,7 @@
         android:id="@+id/btn_delete_quest"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:src="@drawable/ic_custom_close"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/item_quest_delete_description"
         app:tint="@android:color/darker_gray"/>
