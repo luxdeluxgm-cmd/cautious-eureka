@@ -1,52 +1,51 @@
 package com.example.myapplication
 
 import android.app.AlarmManager
-import android.app.AlertDialog
 import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStreamReader
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 import java.util.concurrent.Executors
+import coil.load
 
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var ivAvatar: ImageView
+    private lateinit var cvAvatarFrame: CardView
     private lateinit var etNick: EditText
     private lateinit var etDesc: EditText
-    // private lateinit var toggleLang: ToggleButton <--- USUNIĘTE
     private lateinit var viewCurrentColor: View
     private lateinit var btnReminderTime: Button
 
     private var tempAvatarUri: Uri? = null
-    // Zmieniamy na 0, przypiszemy wartość w loadCurrentData()
     private var tempSelectedColor: Int = 0
 
     private val executor = Executors.newSingleThreadExecutor()
     private val mainHandler = Handler(Looper.getMainLooper())
 
-    private val exportFileLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+    // NOWOŚĆ: Generujemy profesjonalny plik ".rpgsave"
+    private val exportFileLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/octet-stream")) { uri ->
         if (uri != null) saveExportToFile(uri)
     }
 
@@ -55,7 +54,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri != null) { tempAvatarUri = uri; ivAvatar.setImageURI(uri) }
+        if (uri != null) { tempAvatarUri = uri; ivAvatar.setImageURI(uri); ivAvatar.imageTintList = null }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,41 +62,29 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         ivAvatar = findViewById(R.id.iv_settings_avatar)
+        cvAvatarFrame = findViewById(R.id.cv_avatar_frame)
         etNick = findViewById(R.id.et_settings_nick)
         etDesc = findViewById(R.id.et_settings_desc)
-        // toggleLang = findViewById(R.id.toggle_language) <--- USUNIĘTE
         viewCurrentColor = findViewById(R.id.view_current_color)
         btnReminderTime = findViewById(R.id.btn_reminder_time)
 
-        // To ładuje dane, ustawia tempSelectedColor ORAZ KOLORYUJE GUZIKI
         loadCurrentData()
 
-        // Wybór koloru
         findViewById<LinearLayout>(R.id.btn_change_color).setOnClickListener { showCustomRgbPicker() }
-
-        // Wybór godziny powiadomienia
         btnReminderTime.setOnClickListener { showTimePicker() }
-
-        // Wybór avatara
         ivAvatar.setOnClickListener { pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }
 
-        // Przyciski akcji
         findViewById<Button>(R.id.btn_save_settings).setOnClickListener { saveProfileData() }
         findViewById<ImageButton>(R.id.btn_back_settings).setOnClickListener { finish() }
 
-        // Eksport / Import
-        findViewById<Button>(R.id.btn_export).apply {
-            text = "Eksportuj do pliku .json"
-            setOnClickListener { exportFileLauncher.launch("rpg_save_${System.currentTimeMillis()}.json") }
+        findViewById<Button>(R.id.btn_export).setOnClickListener {
+            val dateStr = SimpleDateFormat("dd_MM", Locale.getDefault()).format(Date())
+            exportFileLauncher.launch("kopia_gry_$dateStr.rpgsave")
         }
 
-        findViewById<Button>(R.id.btn_import).apply {
-            text = "Wczytaj z pliku .json"
-            setOnClickListener { importFileLauncher.launch(arrayOf("application/json")) }
-        }
+        findViewById<Button>(R.id.btn_import).setOnClickListener { importFileLauncher.launch(arrayOf("*/*")) }
     }
 
-    // === OBSŁUGA ALARMU ===
     private fun rescheduleAlarm(hour: Int, minute: Int) {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(this, ReminderReceiver::class.java)
@@ -146,23 +133,26 @@ class SettingsActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    // === COLOR PICKER ===
     private fun showCustomRgbPicker() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_rgb_picker, null)
         val square = dialogView.findViewById<ColorPickerSquare>(R.id.square_picker)
         val hue = dialogView.findViewById<SeekBar>(R.id.seek_hue)
-        val preview = dialogView.findViewById<View>(R.id.view_preview)
+        val previewCard = dialogView.findViewById<androidx.cardview.widget.CardView>(R.id.cv_preview_color)
         val etHex = dialogView.findViewById<EditText>(R.id.et_hex_code)
 
-        // Ważne: Startujemy z aktualnie wybranego (tymczasowego) koloru
+        val btnSave = dialogView.findViewById<Button>(R.id.btn_save_picker)
+        val btnCancel = dialogView.findViewById<Button>(R.id.btn_cancel_picker)
+
         var currentDialogColor = tempSelectedColor
 
-        preview.setBackgroundColor(currentDialogColor)
+        previewCard.setCardBackgroundColor(currentDialogColor)
         etHex.setText(String.format("#%06X", (0xFFFFFF and currentDialogColor)))
-        square.setColor(currentDialogColor) // Ustawiamy kropkę na start
+        square.setColor(currentDialogColor)
 
-        val hueColors = IntArray(361) { i -> Color.HSVToColor(floatArrayOf(i.toFloat(), 1f, 1f)) }
-        hue.background = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, hueColors).apply { cornerRadius = 50f }
+        btnSave.backgroundTintList = ColorStateList.valueOf(currentDialogColor)
+
+        val hueColors = IntArray(361) { i -> android.graphics.Color.HSVToColor(floatArrayOf(i.toFloat(), 1f, 1f)) }
+        hue.background = android.graphics.drawable.GradientDrawable(android.graphics.drawable.GradientDrawable.Orientation.LEFT_RIGHT, hueColors).apply { cornerRadius = 50f }
 
         hue.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(s: SeekBar?, p: Int, f: Boolean) { square.hue = p.toFloat() }
@@ -172,55 +162,58 @@ class SettingsActivity : AppCompatActivity() {
 
         square.onColorChanged = { color ->
             currentDialogColor = color
-            preview.setBackgroundColor(color)
+            previewCard.setCardBackgroundColor(color)
+            btnSave.backgroundTintList = ColorStateList.valueOf(color)
+
             val hexStr = String.format("#%06X", (0xFFFFFF and color))
             if (etHex.text.toString() != hexStr) etHex.setText(hexStr)
         }
 
-        etHex.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
+        etHex.addTextChangedListener(object : android.text.TextWatcher {
+            override fun afterTextChanged(s: android.text.Editable?) {
                 try {
-                    val color = Color.parseColor(s.toString())
+                    val color = android.graphics.Color.parseColor(s.toString())
                     currentDialogColor = color
-                    preview.setBackgroundColor(color)
+                    previewCard.setCardBackgroundColor(color)
                     square.setColor(color)
+                    btnSave.backgroundTintList = ColorStateList.valueOf(color)
                 } catch (e: Exception) { }
             }
             override fun beforeTextChanged(s: CharSequence?, st: Int, c: Int, a: Int) {}
             override fun onTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
         })
 
-        AlertDialog.Builder(this)
-            .setView(dialogView)
-            .setPositiveButton("Wybierz") { _, _ ->
-                // 1. Aktualizujemy widok w ustawieniach
-                tempSelectedColor = currentDialogColor
-                viewCurrentColor.setBackgroundColor(tempSelectedColor)
+        val dialog = android.app.AlertDialog.Builder(this).setView(dialogView).create()
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-                // 2. Zapisujemy od razu w GameManagerze i pamięci telefonu
-                GameManager.appThemeColor = tempSelectedColor
-                GameManager.saveGame(this)
+        btnCancel.setOnClickListener { dialog.dismiss() }
 
-                Toast.makeText(this, "Kolor został zmieniony!", Toast.LENGTH_SHORT).show()
+        btnSave.setOnClickListener {
+            tempSelectedColor = currentDialogColor
+            viewCurrentColor.setBackgroundColor(tempSelectedColor)
 
-                // 3. Odświeżamy kolory przycisków od razu (żeby użytkownik widział zmianę)
-                val newColorState = ColorStateList.valueOf(tempSelectedColor)
-                findViewById<Button>(R.id.btn_save_settings).backgroundTintList = newColorState
-                findViewById<Button>(R.id.btn_export).backgroundTintList = newColorState
-                findViewById<Button>(R.id.btn_import).backgroundTintList = newColorState
-                btnReminderTime.setTextColor(tempSelectedColor)
-            }
-            .setNegativeButton("Anuluj", null)
-            .show()
+            GameManager.appThemeColor = tempSelectedColor
+            GameManager.saveGame(this)
+
+            Toast.makeText(this, "Kolor został zmieniony!", Toast.LENGTH_SHORT).show()
+
+            val newColorState = ColorStateList.valueOf(tempSelectedColor)
+            findViewById<Button>(R.id.btn_save_settings).backgroundTintList = newColorState
+            findViewById<Button>(R.id.btn_export).backgroundTintList = newColorState
+            btnReminderTime.setTextColor(tempSelectedColor)
+            cvAvatarFrame.setCardBackgroundColor(tempSelectedColor)
+
+            dialog.dismiss()
+        }
     }
 
-    // === PLIKI I DANE ===
     private fun saveExportToFile(uri: Uri) {
         executor.execute {
             try {
                 val json = GameManager.getExportJson()
                 contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) }
-                mainHandler.post { Toast.makeText(this, "Zapisano plik!", Toast.LENGTH_SHORT).show() }
+                mainHandler.post { Toast.makeText(this, "Zapisano kopię danych!", Toast.LENGTH_LONG).show() }
             } catch (e: Exception) {
                 mainHandler.post { Toast.makeText(this, "Błąd zapisu!", Toast.LENGTH_SHORT).show() }
             }
@@ -240,12 +233,12 @@ class SettingsActivity : AppCompatActivity() {
                 val success = GameManager.importData(sb.toString(), this)
                 mainHandler.post {
                     if (success) {
-                        Toast.makeText(this, "Wczytano! Restart...", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Dane odzyskane pomyślnie! Zrestartuj grę.", Toast.LENGTH_LONG).show()
                         finish()
-                    } else Toast.makeText(this, "Plik uszkodzony!", Toast.LENGTH_SHORT).show()
+                    } else Toast.makeText(this, "Plik uszkodzony lub w złym formacie!", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                mainHandler.post { Toast.makeText(this, "Błąd odczytu!", Toast.LENGTH_SHORT).show() }
+                mainHandler.post { Toast.makeText(this, "Błąd odczytu pliku!", Toast.LENGTH_SHORT).show() }
             }
         }
     }
@@ -253,37 +246,36 @@ class SettingsActivity : AppCompatActivity() {
     private fun loadCurrentData() {
         etNick.setText(GameManager.nickname)
         etDesc.setText(GameManager.description)
-        // toggleLang.isChecked = ... <--- USUNIĘTE
 
-        // Pobieramy kolor z GameManager i ustawiamy go jako tymczasowy
         tempSelectedColor = GameManager.appThemeColor
         viewCurrentColor.setBackgroundColor(tempSelectedColor)
 
         btnReminderTime.text = String.format(Locale.getDefault(), "%02d:%02d", GameManager.reminderHour, GameManager.reminderMinute)
 
+        // Ładowanie avatara lub pokolorowanie domyślnej ikony
         if (GameManager.avatarUri.isNotEmpty()) {
             val file = File(GameManager.avatarUri)
-            if (file.exists()) ivAvatar.setImageURI(Uri.fromFile(file))
+            if (file.exists()) {
+                ivAvatar.load(file) { crossfade(true) }
+                ivAvatar.imageTintList = null
+            }
+        } else {
+            ivAvatar.imageTintList = ColorStateList.valueOf(GameManager.appThemeColor)
         }
 
-        // === KOLOROWANIE PRZYCISKÓW ===
+        // Pokolorowanie motywu Ustawień
         val colorState = ColorStateList.valueOf(GameManager.appThemeColor)
         try {
+            cvAvatarFrame.setCardBackgroundColor(GameManager.appThemeColor)
             findViewById<Button>(R.id.btn_save_settings).backgroundTintList = colorState
             findViewById<Button>(R.id.btn_export).backgroundTintList = colorState
-            findViewById<Button>(R.id.btn_import).backgroundTintList = colorState
             btnReminderTime.setTextColor(GameManager.appThemeColor)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        } catch (e: Exception) { e.printStackTrace() }
     }
 
     private fun saveProfileData() {
         GameManager.nickname = etNick.text.toString().trim()
         GameManager.description = etDesc.text.toString().trim()
-        // GameManager.appLanguage = ... <--- USUNIĘTE
-
-        // Zapisujemy wybrany kolor
         GameManager.appThemeColor = tempSelectedColor
 
         if (tempAvatarUri != null) {

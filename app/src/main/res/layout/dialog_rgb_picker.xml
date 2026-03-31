@@ -1,46 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:background="@drawable/bg_dialog_rounded">
 
-    <com.example.myapplication.ColorPickerSquare
-        android:id="@+id/square_picker"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wybierz motyw"
+        android:textColor="@color/text_primary"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"/>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginBottom="16dp"/>
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        android:layout_marginBottom="24dp">
+
+        <com.example.myapplication.ColorPickerSquare
+            android:id="@+id/square_picker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.cardview.widget.CardView>
 
     <SeekBar
         android:id="@+id/seek_hue"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:max="360"
-        android:paddingStart="0dp"
-        android:paddingEnd="0dp"
-        android:layout_marginBottom="16dp"
+        android:progressDrawable="@android:color/transparent"
+        android:thumbTint="@color/text_primary"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:layout_marginBottom="24dp"
         android:splitTrack="false"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="32dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_preview_color"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp"
+            android:layout_marginEnd="16dp" />
+        <EditText
+            android:id="@+id/et_hex_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="#BB86FC"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_tertiary"
+            android:inputType="textCapCharacters"
+            android:maxLength="7"
+            android:background="@drawable/bg_card_outlined"
+            android:padding="12dp"
+            android:textStyle="bold"
+            android:gravity="center_vertical"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="end">
 
-        <View
-            android:id="@+id/view_preview"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="#000000"
-            android:layout_marginEnd="16dp"/>
-
-        <EditText
-            android:id="@+id/et_hex_code"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btn_cancel_picker"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="#FFFFFF"
-            android:inputType="textCapCharacters"
-            android:maxLength="7"/>
+            android:text="Anuluj"
+            android:textColor="@color/text_secondary"
+            android:layout_marginEnd="12dp"/>
+
+        <Button
+            android:id="@+id/btn_save_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wybierz"
+            android:textColor="@color/bg_dark_base"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"/>
     </LinearLayout>
 
 </LinearLayout>
