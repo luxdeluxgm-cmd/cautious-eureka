@@ -1,11 +1,14 @@
 package com.example.myapplication
 
+import android.content.res.ColorStateList
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import java.io.File
@@ -34,10 +37,11 @@ class JournalAdapter(
     override fun onBindViewHolder(holder: JournalViewHolder, position: Int) {
         val entry = entries[position]
 
-        // --- NAPRAWA KOLORU (Czysty, identyczny odcień) ---
+        // --- OFICJALNA, CZYSTA METODA KOLOROWANIA (zamiast starego setColorFilter) ---
         holder.tvTime.setTextColor(GameManager.appThemeColor)
-        holder.ivJournalIcon.setColorFilter(GameManager.appThemeColor, android.graphics.PorterDuff.Mode.SRC_IN)
-        // --------------------------------------------------
+        ImageViewCompat.setImageTintList(holder.ivJournalIcon, ColorStateList.valueOf(GameManager.appThemeColor))
+        ImageViewCompat.setImageTintMode(holder.ivJournalIcon, PorterDuff.Mode.SRC_IN)
+        // -----------------------------------------------------------------------------
 
         holder.tvTitle.text = entry.title
         holder.tvContent.text = entry.content

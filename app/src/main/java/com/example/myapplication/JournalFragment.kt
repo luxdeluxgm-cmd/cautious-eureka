@@ -1,7 +1,9 @@
 package com.example.myapplication
 
 import android.app.AlertDialog
+import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.EdgeEffect
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -17,6 +20,7 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
+import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,10 +60,23 @@ class JournalFragment : Fragment() {
         emptyStateView = view.findViewById(R.id.ll_empty_state)
         val btnAddNote: ImageButton = view.findViewById(R.id.btn_add_note)
 
-        // Pokolorowanie plusika na głównym ekranie dziennika
-        btnAddNote.setColorFilter(GameManager.appThemeColor, android.graphics.PorterDuff.Mode.SRC_IN)
+        // Czyste, natywne kolorowanie ikony plusa
+        ImageViewCompat.setImageTintList(btnAddNote, ColorStateList.valueOf(GameManager.appThemeColor))
+        ImageViewCompat.setImageTintMode(btnAddNote, PorterDuff.Mode.SRC_IN)
 
         recyclerView.layoutManager = LinearLayoutManager(context)
+
+        // === MAGIA DETALI: Efekt poświaty przy przewijaniu (Overscroll) w Twoim kolorze! ===
+        recyclerView.edgeEffectFactory = object : RecyclerView.EdgeEffectFactory() {
+            override fun createEdgeEffect(view: RecyclerView, direction: Int): EdgeEffect {
+                return EdgeEffect(view.context).apply {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        color = GameManager.appThemeColor
+                    }
+                }
+            }
+        }
+        // ===================================================================================
 
         adapter = JournalAdapter(GameManager.journalEntries) { clickedEntry ->
             showDetailDialog(clickedEntry)
@@ -76,7 +93,10 @@ class JournalFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val btnAdd = view?.findViewById<ImageButton>(R.id.btn_add_note)
-        btnAdd?.setColorFilter(GameManager.appThemeColor, android.graphics.PorterDuff.Mode.SRC_IN)
+        if (btnAdd != null) {
+            ImageViewCompat.setImageTintList(btnAdd, ColorStateList.valueOf(GameManager.appThemeColor))
+            ImageViewCompat.setImageTintMode(btnAdd, PorterDuff.Mode.SRC_IN)
+        }
 
         adapter.notifyDataSetChanged()
         checkEmptyState()
@@ -104,25 +124,19 @@ class JournalFragment : Fragment() {
         val btnSave = dialogView.findViewById<Button>(R.id.btn_save_note)
         val btnCancel = dialogView.findViewById<Button>(R.id.btn_cancel_note)
 
-        // === MAGIA KOLORÓW: Ustawiamy Twój motyw na guziku Opublikuj ===
-        btnSave.backgroundTintList = android.content.res.ColorStateList.valueOf(GameManager.appThemeColor)
-        btnSave.setTextColor(Color.BLACK) // Czarny tekst dla idealnego kontrastu z kolorem
-        // ===============================================================
+        btnSave.backgroundTintList = ColorStateList.valueOf(GameManager.appThemeColor)
+        btnSave.setTextColor(Color.BLACK)
 
         tempImageUri = null
         btnAddPhoto.setOnClickListener { pickImageLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }
         btnRemovePhoto.setOnClickListener { tempImageUri = null; tempPreviewContainer?.visibility = View.GONE }
 
-        val dialog = AlertDialog.Builder(context)
-            .setView(dialogView)
-            .create()
+        val dialog = AlertDialog.Builder(context).setView(dialogView).create()
 
         dialog.show()
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        btnCancel.setOnClickListener {
-            dialog.dismiss()
-        }
+        btnCancel.setOnClickListener { dialog.dismiss() }
 
         btnSave.setOnClickListener {
             val title = etTitle.text.toString().trim()
@@ -140,14 +154,7 @@ class JournalFragment : Fragment() {
 
                 val finalTitle = if (title.isEmpty()) "Notatka" else title
 
-                val newEntry = JournalEntry(
-                    finalTitle,
-                    content,
-                    0,
-                    currentDate,
-                    currentTime,
-                    savedImagePath
-                )
+                val newEntry = JournalEntry(finalTitle, content, 0, currentDate, currentTime, savedImagePath)
 
                 GameManager.journalEntries.add(0, newEntry)
                 GameManager.saveGame(requireContext())
@@ -173,13 +180,11 @@ class JournalFragment : Fragment() {
         val btnClose = dialogView.findViewById<Button>(R.id.btn_close_detail)
         val btnDelete = dialogView.findViewById<ImageButton>(R.id.btn_delete_entry)
 
-        // === MAGIA KOLORÓW: Ustawiamy Twój motyw na Koszu i Zamknij ===
-        btnClose.backgroundTintList = android.content.res.ColorStateList.valueOf(GameManager.appThemeColor)
-        btnClose.setTextColor(Color.BLACK) // Czarny tekst dla idealnego kontrastu
+        btnClose.backgroundTintList = ColorStateList.valueOf(GameManager.appThemeColor)
+        btnClose.setTextColor(Color.BLACK)
 
-        // Malujemy śmietnik "farbą w sprayu" na Twój kolor (pozbywamy się czerwieni)
-        btnDelete.setColorFilter(GameManager.appThemeColor, android.graphics.PorterDuff.Mode.SRC_IN)
-        // ===============================================================
+        ImageViewCompat.setImageTintList(btnDelete, ColorStateList.valueOf(GameManager.appThemeColor))
+        ImageViewCompat.setImageTintMode(btnDelete, PorterDuff.Mode.SRC_IN)
 
         tvDate.text = "${entry.date} ${entry.time}"
         tvTitle.text = entry.title
@@ -189,34 +194,43 @@ class JournalFragment : Fragment() {
             val file = File(entry.imageUri)
             if (file.exists()) {
                 cvImage.visibility = View.VISIBLE
-                ivImage.load(file) {
-                    crossfade(true)
-                }
+                ivImage.load(file) { crossfade(true) }
             }
         }
 
         val dialog = AlertDialog.Builder(context).setView(dialogView).create()
 
         btnDelete.setOnClickListener {
-            AlertDialog.Builder(context)
-                .setTitle("Usuń wpis")
-                .setMessage("Na pewno? Tego nie da się cofnąć.")
-                .setPositiveButton("Tak, usuń") { _, _ ->
-                    if (entry.imageUri != null) {
-                        val file = File(entry.imageUri)
-                        if (file.exists()) file.delete()
-                    }
-                    GameManager.journalEntries.remove(entry)
-                    GameManager.saveGame(requireContext())
+            // === NOWOŚĆ: Twoje autorskie, eleganckie okno usuwania wpisu! ===
+            val confirmView = LayoutInflater.from(context).inflate(R.layout.dialog_confirm_delete, null)
+            val confirmDialog = AlertDialog.Builder(context).setView(confirmView).create()
 
-                    adapter.notifyDataSetChanged()
-                    checkEmptyState()
+            val btnCancelDelete = confirmView.findViewById<Button>(R.id.btn_cancel_delete)
+            val btnConfirmDelete = confirmView.findViewById<Button>(R.id.btn_confirm_delete)
 
-                    dialog.dismiss()
-                    Toast.makeText(context, "Wpis usunięty.", Toast.LENGTH_SHORT).show()
+            // Przycisk usunięcia pokolorowany na wybrany motyw dla zachowania spójności
+            btnConfirmDelete.backgroundTintList = ColorStateList.valueOf(GameManager.appThemeColor)
+
+            btnCancelDelete.setOnClickListener { confirmDialog.dismiss() }
+            btnConfirmDelete.setOnClickListener {
+                if (entry.imageUri != null) {
+                    val file = File(entry.imageUri)
+                    if (file.exists()) file.delete()
                 }
-                .setNegativeButton("Anuluj", null)
-                .show()
+                GameManager.journalEntries.remove(entry)
+                GameManager.saveGame(requireContext())
+
+                adapter.notifyDataSetChanged()
+                checkEmptyState()
+
+                confirmDialog.dismiss()
+                dialog.dismiss()
+                Toast.makeText(context, "Wpis usunięty.", Toast.LENGTH_SHORT).show()
+            }
+
+            confirmDialog.show()
+            confirmDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            // =================================================================
         }
 
         btnClose.setOnClickListener { dialog.dismiss() }

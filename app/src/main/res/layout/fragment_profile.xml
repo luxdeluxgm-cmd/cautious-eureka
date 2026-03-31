@@ -231,6 +231,7 @@
                 android:text="View Statistics 📊"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#673AB7"
+                android:background="@drawable/bg_toast_custom"
                 android:textColor="#FFFFFF"/>
 
         </LinearLayout>
