@@ -62,7 +62,6 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         ivAvatar = findViewById(R.id.iv_settings_avatar)
-        cvAvatarFrame = findViewById(R.id.cv_avatar_frame)
         etNick = findViewById(R.id.et_settings_nick)
         etDesc = findViewById(R.id.et_settings_desc)
         viewCurrentColor = findViewById(R.id.view_current_color)

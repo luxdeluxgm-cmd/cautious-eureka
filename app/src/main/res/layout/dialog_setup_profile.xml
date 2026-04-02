@@ -25,21 +25,19 @@
         android:layout_marginBottom="28dp">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="104dp"
-            android:layout_height="104dp"
-            app:cardCornerRadius="52dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="50dp"
             app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/bg_dark_surface_elevated"
-            android:layout_gravity="center">
+            app:cardBackgroundColor="@color/bg_dark_surface">
 
             <ImageView
                 android:id="@+id/iv_setup_avatar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="2dp"
                 android:src="@drawable/ic_custom_profile"
                 android:scaleType="centerCrop"
-                android:background="@drawable/bg_circle"
                 app:tint="@color/text_secondary"/>
         </androidx.cardview.widget.CardView>
 
