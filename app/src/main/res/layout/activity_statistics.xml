@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F5F5">
+    android:background="@color/bg_dark_base">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="#FFFFFF">
+        app:cardBackgroundColor="@color/bg_dark_surface">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,16 +24,16 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="?selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_menu_close_clear_cancel"
-                app:tint="#000000"/>
+                android:src="@drawable/ic_custom_close"
+                app:tint="@color/text_primary"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stats"
-                android:textSize="20sp"
+                android:text="Statystyki"
+                android:textSize="22sp"
                 android:textStyle="bold"
-                android:textColor="#000000"
+                android:textColor="@color/text_primary"
                 android:layout_marginStart="16dp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -53,8 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="#FFFFFF"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/bg_dark_surface"
                 android:layout_marginBottom="24dp">
 
                 <LinearLayout
@@ -67,10 +67,11 @@
                         android:id="@+id/tv_chart_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Activity"
+                        android:text="Aktywność XP"
                         android:textAlignment="center"
+                        android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="#757575"
+                        android:textColor="@color/text_primary"
                         android:layout_marginBottom="16dp"/>
 
                     <LinearLayout
@@ -83,32 +84,40 @@
                         <Button
                             android:id="@+id/btn_range_week"
                             android:layout_width="0dp"
-                            android:layout_height="40dp"
+                            android:layout_height="48dp"
                             android:layout_weight="1"
-                            android:text="7 Days"
+                            android:text="7 Dni"
                             android:textSize="12sp"
-                            android:backgroundTint="#673AB7"
-                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            app:backgroundTint="@color/accent_default"
+                            android:textColor="@color/bg_dark_base"
+                            app:cornerRadius="12dp"
                             android:layout_marginEnd="4dp"/>
 
                         <Button
                             android:id="@+id/btn_range_month"
                             android:layout_width="0dp"
-                            android:layout_height="40dp"
+                            android:layout_height="48dp"
                             android:layout_weight="1"
-                            android:text="30 Days"
+                            android:text="30 Dni"
                             android:textSize="12sp"
-                            android:backgroundTint="#B0BEC5"
+                            android:textStyle="bold"
+                            app:backgroundTint="@color/bg_dark_surface_elevated"
+                            android:textColor="@color/text_primary"
+                            app:cornerRadius="12dp"
                             android:layout_marginEnd="4dp"/>
 
                         <Button
                             android:id="@+id/btn_range_year"
                             android:layout_width="0dp"
-                            android:layout_height="40dp"
+                            android:layout_height="48dp"
                             android:layout_weight="1"
-                            android:text="Year"
+                            android:text="Rok"
                             android:textSize="12sp"
-                            android:backgroundTint="#B0BEC5"/>
+                            android:textStyle="bold"
+                            app:backgroundTint="@color/bg_dark_surface_elevated"
+                            android:textColor="@color/text_primary"
+                            app:cornerRadius="12dp"/>
                     </LinearLayout>
 
                     <com.example.myapplication.StatsView
@@ -121,22 +130,23 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/bg_dark_surface"
                 android:layout_marginBottom="12dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="20dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="🔥  Streak"
+                        android:text="🔥 Seria (Streak)"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="#757575"
+                        android:textColor="@color/text_secondary"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/tv_stat_streak"
@@ -145,29 +155,30 @@
                         android:text="0"
                         android:textSize="24sp"
                         android:textStyle="bold"
-                        android:textColor="#FF5722"/>
+                        android:textColor="@color/text_primary"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/bg_dark_surface"
                 android:layout_marginBottom="12dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="20dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="✅  Completed quests"
+                        android:text="✅ Wykonane zadania"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="#757575"
+                        android:textColor="@color/text_secondary"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/tv_stat_total"
@@ -176,29 +187,30 @@
                         android:text="0"
                         android:textSize="24sp"
                         android:textStyle="bold"
-                        android:textColor="#4CAF50"/>
+                        android:textColor="@color/text_primary"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/bg_dark_surface"
                 android:layout_marginBottom="12dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="20dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="⭐  Total XP"
+                        android:text="⭐ Łączne XP"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="#757575"
+                        android:textColor="@color/text_secondary"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/tv_stat_xp"
@@ -207,29 +219,30 @@
                         android:text="0"
                         android:textSize="24sp"
                         android:textStyle="bold"
-                        android:textColor="#FFC107"/>
+                        android:textColor="@color/text_primary"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/bg_dark_surface"
                 android:layout_marginBottom="12dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="20dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="👑  Current Level"
+                        android:text="👑 Aktualny poziom"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="#757575"
+                        android:textColor="@color/text_secondary"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/tv_stat_level"
@@ -238,29 +251,31 @@
                         android:text="1"
                         android:textSize="24sp"
                         android:textStyle="bold"
-                        android:textColor="#2196F3"/>
+                        android:textColor="@color/text_primary"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/bg_dark_surface"
                 android:layout_marginBottom="12dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="20dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="📅  Your Power Day"
+                        android:text="📅 Najlepszy dzień"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="#757575"
+                        android:textColor="@color/text_secondary"
                         android:layout_weight="1"/>
 
                     <TextView
@@ -270,30 +285,31 @@
                         android:text="-"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textColor="#9C27B0"/>
+                        android:textColor="@color/text_primary"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/bg_dark_surface"
                 android:layout_marginBottom="24dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="20dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="⚡  Average XP / day"
+                        android:text="⚡ Średnio XP na dzień"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="#757575"
+                        android:textColor="@color/text_secondary"
                         android:layout_weight="1"/>
 
                     <TextView
@@ -303,9 +319,10 @@
                         android:text="0"
                         android:textSize="24sp"
                         android:textStyle="bold"
-                        android:textColor="#009688"/>
+                        android:textColor="@color/text_primary"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
