@@ -1,12 +1,12 @@
 package com.example.myapplication
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -24,7 +24,6 @@ class StatisticsActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_in_up, R.anim.no_animation)
         setContentView(R.layout.activity_statistics)
 
-        // 1. Podepnij widoki
         chartView = findViewById(R.id.stats_chart_view)
         btnWeek = findViewById(R.id.btn_range_week)
         btnMonth = findViewById(R.id.btn_range_month)
@@ -39,53 +38,78 @@ class StatisticsActivity : AppCompatActivity() {
         val tvAvgXp = findViewById<TextView>(R.id.tv_stat_avg_xp)
         val btnBack = findViewById<ImageButton>(R.id.btn_back_stats)
 
-        // 2. Wypełnij standardowe kafelki
         tvStreak.text = GameManager.currentStreak.toString()
         tvTotal.text = GameManager.totalTasksDone.toString()
         tvXp.text = GameManager.totalLifetimeXp.toString()
         tvLevel.text = GameManager.currentLevel.toString()
 
-        // 3. Oblicz i wyświetl NOWE kreatywne statystyki
         tvBestDay.text = calculateBusiestDay()
         tvAvgXp.text = calculateAverageXp().toString()
 
-        // 4. Obsługa przycisków wykresu
         setupChartButtons()
 
-        // Domyślnie ładujemy 7 dni
-        loadChartData(7)
+        // Wywołujemy to sztucznie, by zasymulować kliknięcie na "Week" przy starcie
+        btnWeek.performClick()
 
         btnBack.setOnClickListener { finish() }
     }
 
     private fun setupChartButtons() {
+        // === MAGIA KOLORÓW DARK PREMIUM ===
         val activeColor = ColorStateList.valueOf(GameManager.appThemeColor)
-        val inactiveColor = ColorStateList.valueOf(Color.parseColor("#B0BEC5"))
+        val inactiveColor = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.bg_dark_surface_elevated))
+
+        val textColorActive = ContextCompat.getColor(this, R.color.bg_dark_base)
+        val textColorInactive = ContextCompat.getColor(this, R.color.text_primary)
+        // ==================================
 
         btnWeek.setOnClickListener {
             loadChartData(7)
-            btnWeek.backgroundTintList = activeColor; btnMonth.backgroundTintList = inactiveColor; btnYear.backgroundTintList = inactiveColor
+
+            btnWeek.backgroundTintList = activeColor
+            btnWeek.setTextColor(textColorActive)
+
+            btnMonth.backgroundTintList = inactiveColor
+            btnMonth.setTextColor(textColorInactive)
+
+            btnYear.backgroundTintList = inactiveColor
+            btnYear.setTextColor(textColorInactive)
         }
+
         btnMonth.setOnClickListener {
             loadChartData(30)
-            btnWeek.backgroundTintList = inactiveColor; btnMonth.backgroundTintList = activeColor; btnYear.backgroundTintList = inactiveColor
+
+            btnWeek.backgroundTintList = inactiveColor
+            btnWeek.setTextColor(textColorInactive)
+
+            btnMonth.backgroundTintList = activeColor
+            btnMonth.setTextColor(textColorActive)
+
+            btnYear.backgroundTintList = inactiveColor
+            btnYear.setTextColor(textColorInactive)
         }
+
         btnYear.setOnClickListener {
-            loadChartYearData() // Specjalna funkcja dla roku (grupowanie po miesiącach)
-            btnWeek.backgroundTintList = inactiveColor; btnMonth.backgroundTintList = inactiveColor; btnYear.backgroundTintList = activeColor
+            loadChartYearData()
+
+            btnWeek.backgroundTintList = inactiveColor
+            btnWeek.setTextColor(textColorInactive)
+
+            btnMonth.backgroundTintList = inactiveColor
+            btnMonth.setTextColor(textColorInactive)
+
+            btnYear.backgroundTintList = activeColor
+            btnYear.setTextColor(textColorActive)
         }
     }
 
-    // Wykres dzienny (7 lub 30 dni)
     private fun loadChartData(days: Int) {
-        // ZMIANA: Tekst na angielski
-        tvTitle.text = "Activity (Last $days days)"
+        tvTitle.text = "Aktywność ($days dni)"
 
         val result = mutableListOf<Pair<String, Int>>()
         val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
 
-        // ZMIANA: Wymuszenie Locale.ENGLISH dla dni tygodnia (Mon, Tue...)
-        val labelFormat = if (days == 7) SimpleDateFormat("EEE", Locale.ENGLISH) else SimpleDateFormat("dd", Locale.ENGLISH)
+        val labelFormat = if (days == 7) SimpleDateFormat("EEE", Locale.getDefault()) else SimpleDateFormat("dd", Locale.getDefault())
 
         for (i in (days - 1) downTo 0) {
             val calendar = Calendar.getInstance()
@@ -99,32 +123,28 @@ class StatisticsActivity : AppCompatActivity() {
         chartView.setData(result)
     }
 
-    // Wykres roczny (grupowanie po miesiącach)
     private fun loadChartYearData() {
-        // ZMIANA: Tekst na angielski
-        tvTitle.text = "Activity (Last 12 months)"
+        tvTitle.text = "Aktywność (12 miesięcy)"
 
         val result = mutableListOf<Pair<String, Int>>()
 
-        // ZMIANA: Wymuszenie Locale.ENGLISH dla miesięcy (Jan, Feb...)
-        val monthLabelFormat = SimpleDateFormat("MMM", Locale.ENGLISH)
+        val monthLabelFormat = SimpleDateFormat("MMM", Locale.getDefault())
 
         for (i in 11 downTo 0) {
             val calendar = Calendar.getInstance()
             calendar.add(Calendar.MONTH, -i)
             val monthLabel = monthLabelFormat.format(calendar.time)
 
-            // Tutaj musimy sprawdzić, czy data w dzienniku (dd.MM.yyyy) pasuje do miesiąca
             val targetMonth = calendar.get(Calendar.MONTH)
             val targetYear = calendar.get(Calendar.YEAR)
 
             var count = 0
             GameManager.journalEntries.forEach { entry ->
-                if (entry.type == 1) { // Tylko wykonane zadania
+                if (entry.type == 1) {
                     try {
-                        val parts = entry.date.split(".") // [19, 12, 2025]
+                        val parts = entry.date.split(".")
                         if (parts.size == 3) {
-                            val entryMonth = parts[1].toInt() - 1 // Calendar.MONTH liczy od 0
+                            val entryMonth = parts[1].toInt() - 1
                             val entryYear = parts[2].toInt()
                             if (entryMonth == targetMonth && entryYear == targetYear) {
                                 count++
@@ -138,14 +158,10 @@ class StatisticsActivity : AppCompatActivity() {
         chartView.setData(result)
     }
 
-    // --- KREATYWNE STATYSTYKI ---
-
-    // Jaki dzień tygodnia jest Twoim ulubionym?
     private fun calculateBusiestDay(): String {
-        // ZMIANA: Tekst na angielski
-        if (GameManager.journalEntries.isEmpty()) return "No data"
+        if (GameManager.journalEntries.isEmpty()) return "Brak danych"
 
-        val dayCounts = mutableMapOf<Int, Int>() // Calendar.DAY_OF_WEEK -> Ilość
+        val dayCounts = mutableMapOf<Int, Int>()
         val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         val calendar = Calendar.getInstance()
 
@@ -161,15 +177,12 @@ class StatisticsActivity : AppCompatActivity() {
 
         if (dayCounts.isEmpty()) return "-"
 
-        // Znajdź dzień z max liczbą
         val bestDay = dayCounts.maxByOrNull { it.value }?.key ?: return "-"
 
-        // Zamień int na nazwę (np. "Monday") - WYMUSZENIE ANGIELSKIEGO
         calendar.set(Calendar.DAY_OF_WEEK, bestDay)
-        return SimpleDateFormat("EEEE", Locale.ENGLISH).format(calendar.time).replaceFirstChar { it.uppercase() }
+        return SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.time).replaceFirstChar { it.uppercase() }
     }
 
-    // Ile średnio XP zdobywasz, w dni kiedy w ogóle grasz?
     private fun calculateAverageXp(): Int {
         val completedEntries = GameManager.journalEntries.filter { it.type == 1 }
         if (completedEntries.isEmpty()) return 0

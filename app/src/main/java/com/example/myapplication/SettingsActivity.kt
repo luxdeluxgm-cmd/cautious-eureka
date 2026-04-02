@@ -32,7 +32,6 @@ import coil.load
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var ivAvatar: ImageView
-    private lateinit var cvAvatarFrame: CardView
     private lateinit var etNick: EditText
     private lateinit var etDesc: EditText
     private lateinit var viewCurrentColor: View
@@ -201,7 +200,6 @@ class SettingsActivity : AppCompatActivity() {
             findViewById<Button>(R.id.btn_save_settings).backgroundTintList = newColorState
             findViewById<Button>(R.id.btn_export).backgroundTintList = newColorState
             btnReminderTime.setTextColor(tempSelectedColor)
-            cvAvatarFrame.setCardBackgroundColor(tempSelectedColor)
 
             dialog.dismiss()
         }
@@ -265,7 +263,6 @@ class SettingsActivity : AppCompatActivity() {
         // Pokolorowanie motywu Ustawień
         val colorState = ColorStateList.valueOf(GameManager.appThemeColor)
         try {
-            cvAvatarFrame.setCardBackgroundColor(GameManager.appThemeColor)
             findViewById<Button>(R.id.btn_save_settings).backgroundTintList = colorState
             findViewById<Button>(R.id.btn_export).backgroundTintList = colorState
             btnReminderTime.setTextColor(GameManager.appThemeColor)

@@ -1,70 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="24dp"
-    android:background="#FFFFFF">
+    android:background="@drawable/bg_dialog_rounded"> <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Nowe Zadanie"
+    android:textSize="22sp"
+    android:textStyle="bold"
+    android:textColor="@color/text_primary"
+    android:layout_marginBottom="20dp"
+    android:gravity="center"/>
 
     <EditText
         android:id="@+id/et_quest_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Task title"
-        android:layout_marginBottom="12dp"
+        android:hint="Tytuł zadania"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_tertiary"
+        android:background="@drawable/bg_card_outlined" android:padding="14dp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"
         android:inputType="textCapSentences"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Difficulty:"
-        android:textColor="#757575"
-        android:layout_marginBottom="8dp"/>
+        android:text="Trudność:"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="@color/text_tertiary"
+        android:layout_marginBottom="12dp"/>
 
     <RadioGroup
         android:id="@+id/rg_difficulty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="20dp">
 
         <RadioButton
             android:id="@+id/rb_easy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Easy"
+            android:text="Łatwe"
+            android:textColor="@color/text_secondary"
+            android:buttonTint="@color/accent_default"
             android:checked="true"
-            android:gravity="center"
             android:layout_marginEnd="16dp"/>
 
         <RadioButton
             android:id="@+id/rb_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medium"
-            android:gravity="center"
+            android:text="Średnie"
+            android:textColor="@color/text_secondary"
+            android:buttonTint="@color/accent_default"
             android:layout_marginEnd="16dp"/>
 
         <RadioButton
             android:id="@+id/rb_hard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hard"
-            android:gravity="center"/>
+            android:text="Trudne"
+            android:textColor="@color/text_secondary"
+            android:buttonTint="@color/accent_default"/>
     </RadioGroup>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Category:"
-        android:textColor="#757575"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"/>
+        android:text="Kategoria (Tag):"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="@color/text_tertiary"
+        android:layout_marginBottom="12dp"/>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:layout_marginBottom="8dp">
 
         <RadioGroup
             android:id="@+id/rg_tags"
@@ -76,39 +97,45 @@
                 android:id="@+id/rb_tag_none"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="None"
+                android:text="Brak"
+                android:textColor="@color/text_secondary"
+                android:buttonTint="@color/text_tertiary"
                 android:checked="true"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="12dp"/>
 
             <RadioButton
                 android:id="@+id/rb_tag_work"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Work"
-                android:buttonTint="#42A5F5"
-                android:layout_marginEnd="8dp"/>
+                android:text="Praca"
+                android:textColor="@color/text_secondary"
+                android:buttonTint="#42A5F5" android:layout_marginEnd="12dp"/>
 
             <RadioButton
                 android:id="@+id/rb_tag_school"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="School"
+                android:text="Szkoła"
+                android:textColor="@color/text_secondary"
                 android:buttonTint="#F5A623"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="12dp"/>
 
             <RadioButton
                 android:id="@+id/rb_tag_self"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Self"
+                android:text="Zdrowie"
+                android:textColor="@color/text_secondary"
                 android:buttonTint="#4CAF50"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="12dp"/>
 
             <RadioButton
                 android:id="@+id/rb_tag_custom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Custom..."/>
+                android:textColor="@color/text_secondary"
+                android:buttonTint="@color/accent_default"
+                android:text="Własny..."/>
         </RadioGroup>
     </HorizontalScrollView>
 
@@ -124,52 +151,96 @@
             android:id="@+id/et_custom_tag_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nazwa taga..."/>
+            android:hint="Nazwa taga..."
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_tertiary"
+            android:background="@drawable/bg_card_outlined"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
 
-        <com.example.myapplication.ColorPickerSquare
-            android:id="@+id/tag_square_picker"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="8dp"/>
+            android:layout_height="100dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            android:layout_marginBottom="12dp">
+            <com.example.myapplication.ColorPickerSquare
+                android:id="@+id/tag_square_picker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </androidx.cardview.widget.CardView>
 
         <SeekBar
             android:id="@+id/tag_seek_hue"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:max="360"
-            android:layout_marginTop="8dp"/>
+            android:progressDrawable="@android:color/transparent"
+            android:thumbTint="@color/text_primary"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:splitTrack="false"
+            android:layout_marginBottom="12dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="8dp">
+            android:layout_marginBottom="12dp">
 
-            <View
-                android:id="@+id/tag_view_preview"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="#42A5F5"
-                android:layout_marginEnd="8dp"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:layout_marginEnd="12dp">
+                <View
+                    android:id="@+id/tag_view_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#42A5F5"/>
+            </androidx.cardview.widget.CardView>
 
             <EditText
                 android:id="@+id/tag_et_hex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="#HEX"
-                android:textSize="12sp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_tertiary"
+                android:background="@drawable/bg_card_outlined"
+                android:padding="8dp"
+                android:textSize="14sp"
                 android:enabled="false"/>
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_save_quest"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ADD TASK"
-        android:backgroundTint="#FFD700"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:layout_marginTop="24dp"/>
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginTop="12dp">
+
+        <Button
+            android:id="@+id/btn_cancel_quest"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Anuluj"
+            android:textColor="@color/text_secondary"
+            android:layout_marginEnd="12dp"/>
+
+        <Button
+            android:id="@+id/btn_save_quest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DODAJ"
+            app:backgroundTint="@color/accent_default"
+            android:textColor="@color/bg_dark_base"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"/>
+    </LinearLayout>
+
 </LinearLayout>

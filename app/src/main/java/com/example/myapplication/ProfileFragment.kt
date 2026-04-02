@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import coil.load
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
 import java.io.File
 
 class ProfileFragment : Fragment() {
@@ -31,8 +34,7 @@ class ProfileFragment : Fragment() {
             requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.no_animation)
         }
 
-        val btnStats = view.findViewById<Button>(R.id.btn_open_stats)
-        btnStats.setOnClickListener {
+        view.findViewById<Button>(R.id.btn_open_stats).setOnClickListener {
             val intent = Intent(requireContext(), StatisticsActivity::class.java)
             startActivity(intent)
         }
@@ -48,11 +50,14 @@ class ProfileFragment : Fragment() {
 
         val xpThreshold = GameManager.getNextLevelThreshold(GameManager.currentLevel)
 
-        view.findViewById<TextView>(R.id.tv_nickname).text = if (GameManager.nickname.isNotEmpty()) GameManager.nickname else "Bezimienny"
-        view.findViewById<TextView>(R.id.tv_about_description).text = if (GameManager.description.isNotEmpty()) GameManager.description else "Brak opisu."
+        view.findViewById<TextView>(R.id.tv_nickname).text = if (GameManager.nickname.isNotEmpty()) GameManager.nickname else "Bohater"
+        view.findViewById<TextView>(R.id.tv_about_description).text = if (GameManager.description.isNotEmpty()) GameManager.description else "Brak opisu postaci."
 
-        view.findViewById<TextView>(R.id.tv_level_badge).text = "LVL ${GameManager.currentLevel}"
-        view.findViewById<TextView>(R.id.tv_xp_value).text = "${GameManager.currentXp} / $xpThreshold XP"
+        val tvLevelBadge = view.findViewById<TextView>(R.id.tv_level_badge)
+        val tvXpValue = view.findViewById<TextView>(R.id.tv_xp_value)
+
+        tvLevelBadge.text = "POZIOM ${GameManager.currentLevel}"
+        tvXpValue.text = "${GameManager.currentXp} / $xpThreshold XP"
 
         val pbXp = view.findViewById<ProgressBar>(R.id.progressBar_xp)
         pbXp.max = xpThreshold
@@ -61,19 +66,27 @@ class ProfileFragment : Fragment() {
         view.findViewById<TextView>(R.id.tv_stat_quests).text = "${GameManager.totalTasksDone}"
         view.findViewById<TextView>(R.id.tv_stat_streak).text = "${GameManager.currentStreak}"
 
+        // === MAGIA KOLORÓW DARK PREMIUM ===
         val themeColor = GameManager.appThemeColor
-        val colorState = android.content.res.ColorStateList.valueOf(themeColor)
+        val colorState = ColorStateList.valueOf(themeColor)
 
-        view.findViewById<TextView>(R.id.tv_level_badge).setTextColor(themeColor)
-        view.findViewById<TextView>(R.id.tv_xp_value).setTextColor(themeColor)
-        view.findViewById<ProgressBar>(R.id.progressBar_xp).progressTintList = colorState
-        view.findViewById<LinearLayout>(R.id.ll_stats_container).backgroundTintList = colorState
-        view.findViewById<Button>(R.id.btn_open_stats).backgroundTintList = colorState
+        // Kolorujemy tekst i pasek
+        tvLevelBadge.setTextColor(themeColor)
+        pbXp.progressTintList = colorState
+
+        // Kolorujemy tylko OBRAMOWANIA kart i przycisku!
+        val cvStatsContainer = view.findViewById<MaterialCardView>(R.id.cv_stats_container)
+        val btnOpenStats = view.findViewById<MaterialButton>(R.id.btn_open_stats)
+
+        cvStatsContainer.strokeColor = themeColor
+        btnOpenStats.strokeColor = colorState
+        // ==================================
 
         val ivAvatar = view.findViewById<ImageView>(R.id.iv_avatar)
         ivAvatar.setImageDrawable(null)
+        ivAvatar.imageTintList = null // Resetujemy ewentualne kolorowanie
 
-        // Użycie nowej biblioteki Coil!
+        // Użycie nowej biblioteki Coil + wstawienie customowej ikony jako awaryjnej
         if (GameManager.avatarUri.isNotEmpty()) {
             val file = File(GameManager.avatarUri)
             if (file.exists()) {
@@ -84,10 +97,12 @@ class ProfileFragment : Fragment() {
                     DialogHelper.showImagePreview(requireContext(), GameManager.avatarUri, "Mój Awatar")
                 }
             } else {
-                ivAvatar.setImageResource(android.R.drawable.sym_def_app_icon)
+                ivAvatar.setImageResource(R.drawable.ic_custom_profile)
+                ivAvatar.imageTintList = colorState
             }
         } else {
-            ivAvatar.setImageResource(android.R.drawable.sym_def_app_icon)
+            ivAvatar.setImageResource(R.drawable.ic_custom_profile)
+            ivAvatar.imageTintList = colorState
         }
 
         setupTopGallery(view)
@@ -107,7 +122,6 @@ class ProfileFragment : Fragment() {
                 val entry = imageEntries[i]
                 val path = entry.imageUri!!
 
-                // Użycie nowej biblioteki Coil!
                 imgView.load(File(path)) {
                     crossfade(true)
                 }

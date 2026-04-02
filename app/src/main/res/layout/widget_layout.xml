@@ -4,41 +4,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F5F5"
-    android:padding="8dp">
+    android:background="@drawable/bg_dialog_rounded"
+    android:padding="0dp">
 
     <LinearLayout
         android:id="@+id/ll_widget_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#673AB7"
-        android:padding="8dp"
+        android:background="@color/bg_dark_surface_elevated" android:padding="12dp"
         android:gravity="center">
 
         <TextView
             android:id="@+id/tv_widget_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="⚔️ Daily Quests"
-            android:textColor="#FFFFFF"
+            android:text="⚔️ Zadania RPG"
+            android:textColor="@color/text_primary"
             android:textStyle="bold"
             android:textSize="16sp"/>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stroke_color"/>
 
     <ListView
         android:id="@+id/widget_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#DDDDDD"
-        android:dividerHeight="1dp"
-        android:layout_marginTop="4dp"/>
+        android:divider="@color/stroke_color" android:dividerHeight="1dp"
+        android:layout_marginTop="0dp"/>
 
     <TextView
         android:id="@+id/appwidget_empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="No tasks for today!"
+        android:text="Brak zadań na dziś!"
         android:visibility="gone"
-        android:textColor="#333333"/>
+        android:textColor="@color/text_secondary"
+        android:textStyle="italic"/>
 </LinearLayout>
