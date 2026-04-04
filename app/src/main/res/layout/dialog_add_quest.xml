@@ -5,24 +5,27 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="24dp"
-    android:background="@drawable/bg_dialog_rounded"> <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Nowe Zadanie"
-    android:textSize="22sp"
-    android:textStyle="bold"
-    android:textColor="@color/text_primary"
-    android:layout_marginBottom="20dp"
-    android:gravity="center"/>
+    android:background="@drawable/bg_dialog_rounded">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/quest_add_title"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"/>
 
     <EditText
         android:id="@+id/et_quest_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tytuł zadania"
+        android:hint="@string/quest_add_hint_title"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_tertiary"
-        android:background="@drawable/bg_card_outlined" android:padding="14dp"
+        android:background="@drawable/bg_card_outlined"
+        android:padding="14dp"
         android:layout_marginBottom="20dp"
         android:textStyle="bold"
         android:inputType="textCapSentences"/>
@@ -30,7 +33,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Trudność:"
+        android:text="@string/quest_add_difficulty"
         android:textStyle="bold"
         android:textSize="14sp"
         android:textColor="@color/text_tertiary"
@@ -48,7 +51,7 @@
             android:id="@+id/rb_easy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Łatwe"
+            android:text="@string/quest_diff_easy"
             android:textColor="@color/text_secondary"
             android:buttonTint="@color/accent_default"
             android:checked="true"
@@ -58,7 +61,7 @@
             android:id="@+id/rb_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Średnie"
+            android:text="@string/quest_diff_medium"
             android:textColor="@color/text_secondary"
             android:buttonTint="@color/accent_default"
             android:layout_marginEnd="16dp"/>
@@ -67,7 +70,7 @@
             android:id="@+id/rb_hard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Trudne"
+            android:text="@string/quest_diff_hard"
             android:textColor="@color/text_secondary"
             android:buttonTint="@color/accent_default"/>
     </RadioGroup>
@@ -75,7 +78,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kategoria (Tag):"
+        android:text="@string/quest_add_category"
         android:textStyle="bold"
         android:textSize="14sp"
         android:textColor="@color/text_tertiary"
@@ -97,7 +100,7 @@
                 android:id="@+id/rb_tag_none"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Brak"
+                android:text="@string/quest_tag_none"
                 android:textColor="@color/text_secondary"
                 android:buttonTint="@color/text_tertiary"
                 android:checked="true"
@@ -107,15 +110,16 @@
                 android:id="@+id/rb_tag_work"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Praca"
+                android:text="@string/quest_tag_work"
                 android:textColor="@color/text_secondary"
-                android:buttonTint="#42A5F5" android:layout_marginEnd="12dp"/>
+                android:buttonTint="#42A5F5"
+                android:layout_marginEnd="12dp"/>
 
             <RadioButton
                 android:id="@+id/rb_tag_school"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Szkoła"
+                android:text="@string/quest_tag_school"
                 android:textColor="@color/text_secondary"
                 android:buttonTint="#F5A623"
                 android:layout_marginEnd="12dp"/>
@@ -124,7 +128,7 @@
                 android:id="@+id/rb_tag_self"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Zdrowie"
+                android:text="@string/quest_tag_health"
                 android:textColor="@color/text_secondary"
                 android:buttonTint="#4CAF50"
                 android:layout_marginEnd="12dp"/>
@@ -135,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_secondary"
                 android:buttonTint="@color/accent_default"
-                android:text="Własny..."/>
+                android:text="@string/quest_tag_custom"/>
         </RadioGroup>
     </HorizontalScrollView>
 
@@ -151,7 +155,7 @@
             android:id="@+id/et_custom_tag_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nazwa taga..."
+            android:hint="@string/quest_custom_tag_hint"
             android:textColor="@color/text_primary"
             android:textColorHint="@color/text_tertiary"
             android:background="@drawable/bg_card_outlined"
@@ -228,7 +232,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anuluj"
+            android:text="@string/quest_btn_cancel"
             android:textColor="@color/text_secondary"
             android:layout_marginEnd="12dp"/>
 
@@ -236,7 +240,7 @@
             android:id="@+id/btn_save_quest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DODAJ"
+            android:text="@string/quest_btn_add"
             app:backgroundTint="@color/accent_default"
             android:textColor="@color/bg_dark_base"
             android:textStyle="bold"

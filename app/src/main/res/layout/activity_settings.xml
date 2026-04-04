@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ustawienia"
+            android:text="@string/settings_title"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TWÓJ BOHATER"
+                android:text="@string/settings_section_hero"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_tertiary"
@@ -92,7 +92,7 @@
                         android:id="@+id/et_settings_nick"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Pseudonim"
+                        android:hint="@string/settings_hint_nickname"
                         android:textColor="@color/text_primary"
                         android:textColorHint="@color/text_tertiary"
                         android:background="@drawable/bg_card_outlined"
@@ -105,7 +105,7 @@
                         android:id="@+id/et_settings_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Opis postaci"
+                        android:hint="@string/settings_hint_desc"
                         android:textColor="@color/text_primary"
                         android:textColorHint="@color/text_tertiary"
                         android:background="@drawable/bg_card_outlined"
@@ -117,7 +117,7 @@
                         android:id="@+id/btn_save_settings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Zapisz zmiany"
+                        android:text="@string/settings_btn_save"
                         android:textColor="@color/bg_dark_base"
                         android:textStyle="bold"
                         app:cornerRadius="12dp"/>
@@ -127,7 +127,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PERSONALIZACJA"
+                android:text="@string/settings_section_personalization"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_tertiary"
@@ -157,7 +157,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Codzienne przypomnienie"
+                            android:text="@string/settings_reminder_title"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"/>
 
@@ -186,7 +186,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Kolor przewodni"
+                            android:text="@string/settings_theme_title"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"/>
 
@@ -209,7 +209,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ZARZĄDZANIE DANYMI"
+                android:text="@string/settings_section_data"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_tertiary"
@@ -232,7 +232,7 @@
                         android:id="@+id/btn_export"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:text="Utwórz kopię zapasową"
+                        android:text="@string/settings_btn_export"
                         android:textColor="@color/bg_dark_base"
                         android:textStyle="bold"
                         app:cornerRadius="12dp"
@@ -242,7 +242,7 @@
                         android:id="@+id/btn_import"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:text="Przywróć dane z kopii"
+                        android:text="@string/settings_btn_import"
                         android:textColor="@color/text_primary"
                         app:backgroundTint="@color/bg_dark_surface_elevated"
                         app:strokeColor="@color/stroke_color"

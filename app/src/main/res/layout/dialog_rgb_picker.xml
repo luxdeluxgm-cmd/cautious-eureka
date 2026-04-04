@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Wybierz motyw"
+        android:text="@string/dialog_choose_theme"
         android:textColor="@color/text_primary"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -40,6 +40,7 @@
         android:paddingEnd="12dp"
         android:layout_marginBottom="24dp"
         android:splitTrack="false"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,6 +55,7 @@
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
             android:layout_marginEnd="16dp" />
+
         <EditText
             android:id="@+id/et_hex_code"
             android:layout_width="match_parent"
@@ -80,7 +82,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anuluj"
+            android:text="@string/dialog_btn_cancel"
             android:textColor="@color/text_secondary"
             android:layout_marginEnd="12dp"/>
 
@@ -88,7 +90,7 @@
             android:id="@+id/btn_save_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wybierz"
+            android:text="@string/dialog_btn_choose"
             android:textColor="@color/bg_dark_base"
             android:textStyle="bold"
             app:cornerRadius="12dp"/>

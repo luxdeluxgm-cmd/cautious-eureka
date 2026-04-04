@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A6000000" android:clickable="true"
+    android:background="#A6000000"
+    android:clickable="true"
     android:focusable="true">
 
     <androidx.cardview.widget.CardView
@@ -12,47 +13,57 @@
         android:layout_gravity="center"
         app:cardCornerRadius="24dp"
         app:cardElevation="24dp"
-        app:cardBackgroundColor="@color/bg_dark_surface"> <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="32dp"
-        android:gravity="center"
-        android:background="@drawable/bg_dialog_rounded"> <TextView
-        android:id="@+id/tv_level_up_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LEVEL UP!"
-        android:textColor="@color/accent_default" android:textSize="32sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.05"
-        android:layout_marginBottom="24dp"/>
+        app:cardBackgroundColor="@color/bg_dark_surface">
 
-        <ImageView
-            android:id="@+id/iv_level_up_star"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@android:drawable/star_big_on"
-            android:layout_marginBottom="24dp"
-            app:tint="@color/accent_default"/> <TextView
-            android:id="@+id/tv_level_up_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Poziom 5 osiągnięty!"
-            android:textColor="@color/text_primary" android:textSize="22sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="32dp"/>
-
-        <Button
-            android:id="@+id/btn_level_up_ok"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="FANTASTIC!"
-            app:backgroundTint="@color/accent_default" android:textColor="@color/bg_dark_base" android:textStyle="bold"
-            android:textSize="18sp"
-            app:cornerRadius="16dp"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:gravity="center"
+            android:background="@drawable/bg_dialog_rounded">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_level_up_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/level_up_title"
+                android:textColor="@color/accent_default"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.05"
+                android:layout_marginBottom="24dp"/>
+
+            <ImageView
+                android:id="@+id/iv_level_up_star"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@android:drawable/star_big_on"
+                android:layout_marginBottom="24dp"
+                app:tint="@color/accent_default"/>
+
+            <TextView
+                android:id="@+id/tv_level_up_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/level_up_message_placeholder"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="32dp"/>
+
+            <Button
+                android:id="@+id/btn_level_up_ok"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="@string/level_up_btn"
+                app:backgroundTint="@color/accent_default"
+                android:textColor="@color/bg_dark_base"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                app:cornerRadius="16dp"/>
+
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

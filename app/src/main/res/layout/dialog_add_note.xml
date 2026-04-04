@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nowy Wpis"
+        android:text="@string/journal_add_title"
         android:textColor="@color/text_primary"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -21,7 +21,7 @@
         android:id="@+id/et_note_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tytuł (np. Trening zrobiony!)"
+        android:hint="@string/journal_add_hint_title"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_tertiary"
         android:inputType="textCapSentences"
@@ -33,7 +33,7 @@
         android:id="@+id/et_note_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Opisz swój dzień..."
+        android:hint="@string/journal_add_hint_desc"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_tertiary"
         android:inputType="textMultiLine"
@@ -62,7 +62,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dodaj zdjęcie"
+            android:text="@string/journal_add_photo"
             android:textStyle="bold"
             android:layout_marginStart="12dp"
             android:textColor="@color/text_secondary"/>
@@ -106,7 +106,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anuluj"
+            android:text="@string/journal_btn_cancel"
             android:textColor="@color/text_secondary"
             android:layout_marginEnd="12dp"/>
 
@@ -114,7 +114,7 @@
             android:id="@+id/btn_save_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Opublikuj"
+            android:text="@string/journal_btn_add"
             android:textColor="@color/bg_dark_base"
             android:textStyle="bold"
             app:backgroundTint="@color/accent_default"

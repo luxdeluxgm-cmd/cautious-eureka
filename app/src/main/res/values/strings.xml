@@ -1,47 +1,100 @@
 <resources>
     <string name="app_name">Grind Log</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="setup_title">Character Creator</string>
+    <string name="setup_hint_nickname">Your Name</string>
+    <string name="setup_hint_desc">Short description</string>
+    <string name="setup_btn_start">BEGIN</string>
 
-    <string name="nav_journal">Journal</string>
-    <string name="nav_quests">Quests</string>
-    <string name="nav_profile">Profile</string>
+    <string name="profile_default_nickname">Hero</string>
+    <string name="profile_default_desc">No character description.</string>
+    <string name="profile_level_prefix">LEVEL %1$d</string>
+    <string name="profile_xp_format">%1$d / %2$d XP</string>
+    <string name="profile_stat_quests">Quests</string>
+    <string name="profile_stat_streak">Streak</string>
+    <string name="profile_btn_stats">FULL STATISTICS</string>
+    <string name="profile_avatar_preview">My Avatar</string>
 
-    <string name="journal_title">Journal</string>
-    <string name="journal_empty_title">Your journal is empty...</string>
-    <string name="journal_empty_subtitle">Add an entry or complete a quest!</string>
-    <string name="dialog_note_header">New Entry</string>
-    <string name="dialog_note_title_hint">Title (e.g., Workout done!)</string>
-    <string name="dialog_note_content_hint">Describe your day...</string>
-    <string name="dialog_note_add_photo">Add photo</string>
-    <string name="entry_detail_delete_description">Delete entry</string>
-    <string name="entry_detail_btn_close">Close</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_hero">YOUR HERO</string>
+    <string name="settings_hint_nickname">Nickname</string>
+    <string name="settings_hint_desc">Character Description</string>
+    <string name="settings_btn_save">Save Changes</string>
+    <string name="settings_section_personalization">PERSONALIZATION</string>
+    <string name="settings_reminder_title">Daily Reminder</string>
+    <string name="settings_theme_title">Theme Color</string>
+    <string name="settings_section_data">DATA MANAGEMENT</string>
+    <string name="settings_btn_export">Create Backup</string>
+    <string name="settings_btn_import">Restore Backup</string>
+    <string name="settings_toast_color_changed">Color changed successfully!</string>
+    <string name="settings_toast_saved">Settings saved!</string>
+    <string name="settings_toast_export_success">Backup saved successfully!</string>
+    <string name="settings_toast_export_error">Save error!</string>
+    <string name="settings_toast_import_success">Data restored successfully! Please restart the game.</string>
+    <string name="settings_toast_import_error">File corrupted or invalid format!</string>
 
-    <string name="quests_header">Quest Board</string>
-    <string name="dialog_quest_header">New Quest</string>
-    <string name="dialog_quest_hint_title">What needs to be done?</string>
-    <string name="dialog_quest_label_difficulty">Difficulty level:</string>
-    <string name="dialog_quest_easy">Easy\n(10 XP)</string>
-    <string name="dialog_quest_medium">Medium\n(30 XP)</string>
-    <string name="dialog_quest_hard">Hard\n(50 XP)</string>
-    <string name="item_quest_delete_description">Delete quest</string>
-    <string name="item_quest_default_text">Example quest</string>
+    <string name="stats_title">Statistics</string>
+    <string name="stats_chart_title_days">Activity (%1$d days)</string>
+    <string name="stats_chart_title_months">Activity (12 months)</string>
+    <string name="stats_btn_week">7 Days</string>
+    <string name="stats_btn_month">30 Days</string>
+    <string name="stats_btn_year">Year</string>
+    <string name="stats_card_streak">🔥 Streak</string>
+    <string name="stats_card_quests">✅ Completed Quests</string>
+    <string name="stats_card_xp">⭐ Total XP</string>
+    <string name="stats_card_level">👑 Current Level</string>
+    <string name="stats_card_best_day">📅 Best Day</string>
+    <string name="stats_card_avg_xp">⚡ Average XP / Day</string>
+    <string name="stats_no_data">No data</string>
 
-    <string name="dialog_quest_label_tag">Category:</string>
-    <string name="tag_work">Work</string>
-    <string name="tag_school">School</string>
-    <string name="tag_self">Self</string>
-    <string name="tag_custom">Custom</string>
-    <string name="tag_custom_hint">Custom name...</string>
-    <string name="tag_color_label">Pick a color:</string>
-    <string name="tag_select_custom">Custom +</string>
+    <string name="quest_add_title">New Quest</string>
+    <string name="quest_add_hint_title">Quest Title</string>
+    <string name="quest_add_difficulty">Difficulty:</string>
+    <string name="quest_diff_easy">Easy</string>
+    <string name="quest_diff_medium">Medium</string>
+    <string name="quest_diff_hard">Hard</string>
+    <string name="quest_add_category">Category (Tag):</string>
+    <string name="quest_tag_none">None</string>
+    <string name="quest_tag_work">Work</string>
+    <string name="quest_tag_school">School</string>
+    <string name="quest_tag_health">Health</string>
+    <string name="quest_tag_custom">Custom...</string>
+    <string name="quest_custom_tag_hint">Tag name...</string>
+    <string name="quest_btn_cancel">Cancel</string>
+    <string name="quest_btn_add">ADD</string>
 
-    <string name="level_up_header">LEVEL UP!</string>
-    <string name="overlay_level_up_desc">Level %d reached</string>
-    <string name="overlay_level_up_btn_claim">CLAIM</string>
-    <string name="toast_xp_gain">+%d XP</string>
+    <string name="level_up_title">LEVEL UP!</string>
+    <string name="level_up_message">Level %1$d reached!</string>
+    <string name="level_up_btn">AMAZING!</string>
 
+    <string name="widget_title">⚔️ RPG Quests</string>
+    <string name="widget_empty">No quests for today!</string>
 
+    <string name="dialog_btn_ok">OK</string>
+    <string name="dialog_choose_theme">Choose theme</string>
 
+    <string name="item_quest_delete_description">This action cannot be reversed</string>
 
+    <string name="journal_add_title">New Entry</string>
+    <string name="journal_add_hint_title">Entry Title</string>
+    <string name="journal_add_hint_desc">What happened?</string>
+    <string name="journal_add_photo">Add a picture</string>
+
+    <string name="journal_btn_cancel">Cancel</string>
+    <string name="journal_btn_add">Publish</string>
+
+    <string name="dialog_delete_title">Delete Entry</string>
+    <string name="dialog_delete_message">Are you sure you want to delete this entry? This cannot be undone.</string>
+    <string name="dialog_btn_cancel">Cancel</string>
+    <string name="dialog_btn_delete">Delete</string>
+
+    <string name="journal_detail_date_placeholder">12/12/2025 14:00</string>
+    <string name="journal_detail_title_placeholder">Entry Title</string>
+    <string name="journal_detail_content_placeholder">Full content...</string>
+    <string name="journal_detail_desc_delete">Delete entry</string>
+    <string name="dialog_btn_close">Close</string>
+
+    <string name="dialog_btn_choose">Choose</string>
+
+    <string name="level_up_message_placeholder">Level 5 reached!</string>
 </resources>

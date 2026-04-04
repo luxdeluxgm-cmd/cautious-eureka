@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Usuń wpis"
+        android:text="@string/dialog_delete_title"
         android:textColor="@color/text_primary"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Czy na pewno chcesz usunąć ten wpis? Tego nie da się cofnąć."
+        android:text="@string/dialog_delete_message"
         android:textColor="@color/text_secondary"
         android:textSize="16sp"
         android:lineSpacingExtra="4dp"
@@ -36,7 +36,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anuluj"
+            android:text="@string/dialog_btn_cancel"
             android:textColor="@color/text_secondary"
             android:layout_marginEnd="12dp"/>
 
@@ -44,7 +44,7 @@
             android:id="@+id/btn_confirm_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Usuń"
+            android:text="@string/dialog_btn_delete"
             android:textColor="@color/bg_dark_base"
             android:textStyle="bold"
             app:cornerRadius="12dp"/>
